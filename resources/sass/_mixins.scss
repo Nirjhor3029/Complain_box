@@ -214,8 +214,17 @@ html, body {
   }
 }
 
+
+
+form label.required:after
+{
+    color: red;
+    content: " *";
+    font-size: 20px;
+}
+
 .custom-form-control {
-  border: 1px solid #8000ff;
+  border: 1px solid #5900ff;
   border-radius: 20px;
   color: #495057;
 

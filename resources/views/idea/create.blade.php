@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('site_title', 'Submit Idea')
+@section('site_title', 'Submit Complain')
 
-@section('bg_image','submit-idea-page')
+@section('bg_image','')
 
 @section('content')
 
@@ -42,22 +42,62 @@
         <div class="col-12 col-sm-10 col-md-9 offset-md-1 col lg-9 offset-lg-1">
             @include('errors.validation')
 
-            @can('add_idea')
+            {{-- @can('add_idea') --}}
 
-            {!! Form::open(['url' => route('dashboard.idea.store'), 'method' => 'post','id'=>'from' ,'enctype' => 'multipart/form-data','onsubmit'=>'if(confirm("Are you sure you want to Submit Your Idea ?")){ return true; } else{ return false; }']) !!}
+            {!! Form::open(['url' => route('dashboard.idea.store'), 'method' => 'post','id'=>'from' ,'enctype' => 'multipart/form-data','onsubmit'=>'if(confirm("Are you sure you want to Submit Your complaint ?")){ return true; } else{ return false; }']) !!}
 
-            <div class="row">
-                <div class="form-group col-12 col-sm-4 col-md-4 col-lg-4">
-                    {!! Form::label('topic', 'Idea Topic', ['class' => 'font-weight-bold custom-form-control-label']) !!}
-                    {!! Form::select('topic', ['Distribution' => 'Distribution','Consumer Engagement' => 'Consumer Engagement','B2B' => 'B2B','Automation' => 'Automation','Merchandising' => 'Merchandising','FF' => 'FF','Research' => 'Research','Channel Management' => 'Channel Management','Product' => 'Product','Pricing and Compliance' => 'Pricing and Compliance','Sales Management' =>'Sales Management','Illicit' => 'Illicit','New Category' => 'New Category','Alternative Revenue' => 'Alternative Revenue','Culture and Way of Work' => 'Culture and Way of Work','Others' => 'Others'] , null , ['class' => 'custom-form-control', 'title' => 'Select Idea Topic', 'required', 'id'=>'topic']) !!}
-                </div>
-                <!-- /.form-group col-6 -->
-            </div>
-            <!-- /.row -->
 
-            <div class="row">
+			<div class="row">
                 <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6">
-                    {!! Form::label('title', 'Idea Title', ['class' => 'font-weight-bold custom-form-control-label']) !!}
+                    {!! Form::label('name', 'Name', ['class' => 'font-weight-bold custom-form-control-label required']) !!}
+                    {!! Form::text('name', null, ['class' => 'form-control custom-form-control', 'required', 'id'=>'name']) !!}
+                </div>
+				<!-- /.form-group col-12 -->
+				<div class="form-group col-12 col-sm-6 col-md-6 col-lg-6">
+                    {!! Form::label('contact', 'Contact Number', ['class' => 'font-weight-bold custom-form-control-label required']) !!}
+                    {!! Form::Number('contact', null, ['class' => 'form-control custom-form-control', 'required', 'id'=>'contact']) !!}
+                </div>
+                <!-- /.form-group col-12 -->
+            </div>
+			<!-- /.row -->
+
+			<div class="row">
+                <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6">
+                    {!! Form::label('email', 'Email', ['class' => 'font-weight-bold custom-form-control-label required']) !!}
+                    {!! Form::email('email', null, ['class' => 'form-control custom-form-control', 'required', 'id'=>'email']) !!}
+                </div>
+				<!-- /.form-group col-12 -->
+				<div class="form-group col-12 col-sm-6 col-md-6 col-lg-6">
+                    {!! Form::label('address', 'Address / EUDC Name', ['class' => 'font-weight-bold custom-form-control-label required']) !!}
+                    {!! Form::text('address', null, ['class' => 'form-control custom-form-control', 'required', 'id'=>'address']) !!}
+                </div>
+                <!-- /.form-group col-12 -->
+            </div>
+			<!-- /.row -->
+
+			<div class="row">
+                <div class="form-group col-12 col-sm-4 col-md-4 col-lg-4">
+                    {!! Form::label('entrepreneur_id', 'Entrepreneur ID', ['class' => 'font-weight-bold custom-form-control-label']) !!}
+                    {!! Form::text('entrepreneur_id', null, ['class' => 'form-control custom-form-control', 'id'=>'entrepreneur_id']) !!}
+                </div>
+				<!-- /.form-group col-12 -->
+				<div class="form-group col-12 col-sm-4 col-md-4 col-lg-4">
+                    {!! Form::label('product_code', 'Product Code', ['class' => 'font-weight-bold custom-form-control-label']) !!}
+                    {!! Form::text('product_code', null, ['class' => 'form-control custom-form-control', 'id'=>'product_code']) !!}
+                </div>
+				<!-- /.form-group col-12 -->
+				<div class="form-group col-12 col-sm-4 col-md-4 col-lg-4">
+                    {!! Form::label('order_id', 'Order Id', ['class' => 'font-weight-bold custom-form-control-label']) !!}
+                    {!! Form::text('order_id', null, ['class' => 'form-control custom-form-control', 'id'=>'order_id']) !!}
+                </div>
+                <!-- /.form-group col-12 -->
+
+            </div>
+			<!-- /.row -->
+
+            <div class="row">
+                <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12">
+                    {!! Form::label('title', 'Complain Title', ['class' => 'font-weight-bold custom-form-control-label required']) !!}
                     {!! Form::text('title', null, ['class' => 'form-control custom-form-control', 'required', 'id'=>'title']) !!}
                 </div>
                 <!-- /.form-group col-12 -->
@@ -66,8 +106,8 @@
 
             <div class="row">
                 <div class="form-group col-12">
-                    {!! Form::label('elevator_pitch', 'Elevator Pitch', ['class' => 'font-weight-bold custom-form-control-label']) !!}
-                    {!! Form::textarea('elevator_pitch', null, ['class' => 'form-control custom-form-control custom-form-control-text-area', 'rows' => '3', 'required','id'=>'elevator_pitch']) !!}
+                    {!! Form::label('short_description', 'Short Description', ['class' => 'font-weight-bold custom-form-control-label required']) !!}
+                    {!! Form::textarea('short_description', null, ['class' => 'form-control custom-form-control custom-form-control-text-area', 'rows' => '3', 'required','id'=>'short_description']) !!}
                 </div>
                 <!-- /.form-group col-12 -->
             </div>
@@ -75,12 +115,16 @@
 
             <div class="row">
                 <div class="form-group col-12">
-                    {!! Form::label('description', 'Description', ['class' => 'font-weight-bold custom-form-control-label']) !!}
+                    {!! Form::label('description', 'Detail Description', ['class' => 'font-weight-bold custom-form-control-label']) !!}
                     {!! Form::textarea('description', null, ['class' => 'form-control custom-form-control custom-form-control-text-area', 'id'=>'description']) !!}
                 </div>
                 <!-- /.form-group col-12 -->
             </div>
-            <!-- /.row -->
+			<!-- /.row -->
+
+
+
+
 
             <div class="row">
                 <div class="form-group col-6">
@@ -110,7 +154,7 @@
 
             <div class="row">
                 <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 text-right">
-                    {!! Form::submit('Draft', ['class' => 'btn btn-purple custom-form-control-btn mr-3', 'name' => 'submit_button' ]) !!}
+                    {{-- {!! Form::submit('Draft', ['class' => 'btn btn-purple custom-form-control-btn mr-3', 'name' => 'submit_button' ]) !!} --}}
                      {!! Form::submit('Publish', ['class' => 'btn btn-success custom-form-control-btn', 'name' => 'submit_button']) !!}
                 </div>
                 <!-- /.form-group col-12 -->
@@ -118,7 +162,7 @@
             <!-- /.row -->
 
             {!! Form::close() !!}
-            @endcan
+            {{-- @endcan --}}
         </div>
         <!-- /.col-12 col-sm-12 col-md-12 col lg-12 -->
 
@@ -328,7 +372,7 @@ $(document).on("change","#upload_form", function(event) {
             sizeInMB = exactSize * 1000;
         }
 
-       return sizeInMB; 
+       return sizeInMB;
     }
 });
 </script>

@@ -18,7 +18,7 @@
 
     <nav class="navbar navbar-expand-md navbar-light custom-navbar-design bg-white shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('dashboard.index') }}"><img src="{{ asset('img/logo.png') }}"
+            <a class="navbar-brand" href="{{ route('welcome') }}"><img src="{{ asset('img/logo.png') }}"
                                                                                alt="Logo" height="55"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -29,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav justify-content-end d-flex flex-fill">
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="{{ route('dashboard.index') }}" class="nav-link"><span
                                     @if (request()->is('secure/dashboard')) class="border-bottom-custom" @endif>Home</span></a>
                     </li>
@@ -61,7 +61,7 @@
                             <span class="idea-notification-badge"><img src="{{ asset('img/idea-icon.svg') }}" height="18" alt=""></span>
                         @endif
                     </li>
-                    <!-- /.nav-item -->
+                    <!-- /.nav-item --> --}}
 
                     <li class="nav-item">
                         <a href="{{ route('dashboard.idea.create') }}" class="nav-link"><span

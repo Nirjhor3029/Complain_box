@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Idea;
 use App\Upload;
 use Carbon\Carbon;
-use App\Authorizable;
 use Illuminate\Http\Request;
 use App\Events\NewIdeaChannel;
+use App\Status;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
@@ -16,18 +16,18 @@ use Illuminate\Support\Facades\Validator;
 
 class IdeaController extends Controller
 {
-    use Authorizable;
+
 
     /**
      * IdeaController constructor.
      */
     public function __construct()
     {
-        $this->middleware([
-            'web',
-            'auth',
-            'isActive',
-        ]);
+        // $this->middleware([
+        //     'web',
+        //     'auth',
+        //     'isActive',
+        // ]);
     }
 
     /**
@@ -101,14 +101,19 @@ class IdeaController extends Controller
      */
 
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request)
     {
-        // return $request;
+		$status = Status::where('title','pending')->first();
+
+		//return $status;
+       // return $request;
 
         $validator = Validator::make($request->all(), [
-            'topic' => 'required|max:60',
+            'name' => 'required|max:60',
+            'contact' => 'required|max:60',
+            'email' => 'required|max:60',
             'title' => 'required|max:100',
-            'elevator_pitch' => 'required|max:1536',
+            'short_description' => 'required|max:1536',
             'description' => 'present|nullable',
         ]);
 
@@ -126,12 +131,25 @@ class IdeaController extends Controller
                 }
                 $idea->user_id = auth()->id();
                 $idea->is_active = true;
-                $idea->is_submitted = true;
+				$idea->is_submitted = true;
+
                 $idea->submitted_at = Carbon::now();
-                $idea->topic = $request->get('topic');
                 $idea->title = $request->get('title');
-                $idea->elevator_pitch = $request->get('elevator_pitch');
-                $idea->description = $request->get('description');
+                $idea->short_description = $request->get('short_description');
+				$idea->description = $request->get('description');
+
+				$idea->name = $request->get('name');
+				$idea->contact = $request->get('contact');
+				$idea->email = $request->get('email');
+
+				$idea->address = $request->get('address');
+				$idea->entrepreneur_id = $request->get('entrepreneur_id');
+				$idea->product_code = $request->get('product_code');
+				$idea->order_id = $request->get('order_id');
+
+				$idea->status = $status->id;
+
+
                 $idea->save();
 
                 break;
@@ -160,7 +178,7 @@ class IdeaController extends Controller
 
             //return redirect()->route('dashboard.idea.edit', $idea->uuid);
 
-            return redirect()->route('dashboard.idea.index');
+            return redirect()->route('dashboard.idea.create');
         }
 
         laraflash()->message($idea->title . ' was updated with Draft Status on ' . Carbon::now()->format('F j, Y, g:i A'))->success();

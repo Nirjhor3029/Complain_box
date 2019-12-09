@@ -11,7 +11,8 @@ class Idea extends Model
 
     protected $fillable = [
         'uuid', 'user_id', 'is_active', 'is_submitted', 'submitted_at', 'is_approved', 'approved_at', 'is_featured', 'featured_at', 'topic', 'title',
-        'elevator_pitch', 'description',
+		'short_description', 'description',
+		'name','contact','email','address','entrepreneur_id','product_code','order_id',
     ];
 
     /**
@@ -78,5 +79,10 @@ class Idea extends Model
     public function avgRating()
     {
         return $this->ratings()->selectRaw('ROUND((AVG(rating)), 2) as avgRating, rateable_id');
+	}
+
+	public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 }

@@ -62,8 +62,8 @@
     </style>
 </head>
 <body>
-    
-<div class="flex-center position-ref  full-height"> 
+
+<div class="flex-center position-ref  full-height">
     @if (Route::has('account.login'))
         <div class="top-right links">
             @auth
@@ -78,33 +78,30 @@
         </div>
     @endif
 
-    <div class="content">
+    <div class="content content-50-percent">
         <div class="row">
             <div class="col-sm-6">
-                    <div id="container "  class="float_left">
-                            <button class="learn-more">
-                                <span class="circle">
-                                <span class="icon arrow"></span>
-                                </span>
-                                <span class="button-text">Learn More</span>
-                            </button>
-                    </div>
+				<div id="container "  class="float_left">
+						<a href="{{route('dashboard.idea.create')}}" class="learn-more">
+							<span class="circle">
+								<span class="icon arrow"></span>
+							</span>
+							<span class="button-text">Submit Complain.</span>
+						</a>
+				</div>
             </div>
             <div class="col-sm-6">
-                    
-                            <div id="container" class="float_right">
-                                    <button class="learn-more">
-                                        <span class="circle">
-                                        <span class="icon arrow"></span>
-                                        </span>
-                                        <span class="button-text">Learn More</span>
-                                    </button>
-                            </div>
-                    
+				<div id="container" class="float_right">
+				<a href="#" class="learn-more">
+						<span class="circle">
+						<span class="icon arrow"></span>
+						</span>
+						<span class="button-text">Check Complain Status.</span>
+					</a>
+				</div>
             </div>
         </div>
 
-        
         {{-- <div class="mb-4 text-center">
             <a href="{{ route('dashboard.index') }}"><img src="{{ asset('img/home_logo.png') }}" alt="" width="150"></a>
         </div> --}}
