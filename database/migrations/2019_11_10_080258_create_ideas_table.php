@@ -16,6 +16,7 @@ class CreateIdeasTable extends Migration
         Schema::create('ideas', static function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('uuid', 20)->unique();
+            $table->string('complain_id', 20)->unique();
             $table->bigInteger('user_id')->nullable();
 			// $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

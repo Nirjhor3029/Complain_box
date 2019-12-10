@@ -65,8 +65,12 @@
 
                     <li class="nav-item">
                         <a href="{{ route('dashboard.idea.create') }}" class="nav-link"><span
-                                    @if (request()->is('secure/dashboard/idea/create')) class="border-bottom-custom" @endif>Submit Idea</span></a>
-                    </li>
+                                    @if (request()->is('secure/dashboard/idea/create')) class="border-bottom-custom" @endif>Submit Complaint</span></a>
+					</li>
+					<li class="nav-item">
+							<a href="{{ route('status_check') }}" class="nav-link"><span
+										@if (request()->is('status-check')) class="border-bottom-custom" @endif>Complaint Status</span></a>
+						</li>
                     <!-- /.nav-item -->
                 </ul>
 

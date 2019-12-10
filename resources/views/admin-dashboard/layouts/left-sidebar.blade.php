@@ -24,7 +24,7 @@
             </li>
             <!-- /.left-side-navbar-li -->
 
-            <li class="left-side-navbar-li">
+            {{-- <li class="left-side-navbar-li">
                 <a href="{{ route('admin.admin-previousMontIdeas') }}" @if (request()->is('secure/'))class="active-navbar-item"@endif><img src="{{ asset('img/admin/history-icon.svg') }}" alt=""> Previous Month Ideas</a>
             </li>
             <!-- /.left-side-navbar-li -->
@@ -32,10 +32,10 @@
             <li class="left-side-navbar-li">
                 <a href="{{ route('admin.admin-featuredIdeas') }}" @if (request()->is('secure/'))class="active-navbar-item"@endif><img src="{{ asset('img/admin/featured-icon.svg') }}" alt=""> Featured Ideas</a>
             </li>
-            <!-- /.left-side-navbar-li -->
+            <!-- /.left-side-navbar-li --> --}}
 
             <li class="left-side-navbar-li">
-                <a href="{{ route('admin.admin-allIdeas') }}" @if (request()->is('secure/'))class="active-navbar-item"@endif><img src="{{ asset('img/admin/all-ideas-icon.svg') }}" alt=""> All Ideas</a>
+                <a href="{{ route('admin.admin-allIdeas') }}" @if (request()->is('secure/'))class="active-navbar-item"@endif><img src="{{ asset('img/admin/all-ideas-icon.svg') }}" alt=""> All Complains</a>
             </li>
             <!-- /.left-side-navbar-li -->
 

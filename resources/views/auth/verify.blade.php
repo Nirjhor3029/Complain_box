@@ -8,7 +8,7 @@
     <div class="row" style="margin-top: 8vh;">
         <div class="col-12 col-sm-4 offset-sm-1 col-md-3 offset-md-1 col-lg-3 offset-lg-1">
             <div class="mb-4 text-center">
-                <a href="{{ route('dashboard.index') }}"><img src="{{ asset('img/logo.svg') }}" alt="" width="80"></a>
+                <a href="{{ route('welcome') }}"><img src="{{ asset('img/logo.png') }}" alt="" width="80"></a>
             </div>
             <!-- /.mb-4 -->
 

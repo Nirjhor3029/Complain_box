@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+
 // use File;
 
 class IdeaController extends Controller
@@ -95,7 +96,7 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -103,10 +104,10 @@ class IdeaController extends Controller
 
     public function store(Request $request)
     {
-		$status = Status::where('title','pending')->first();
+        $status = Status::where('title', 'pending')->first();
 
-		//return $status;
-       // return $request;
+        //return $status;
+        // return $request;
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:60',
@@ -130,24 +131,25 @@ class IdeaController extends Controller
                     $idea = Idea::where('id', $request->idea_id)->first();
                 }
                 $idea->user_id = auth()->id();
+                $idea->complain_id = uniqid();
                 $idea->is_active = true;
-				$idea->is_submitted = true;
+                $idea->is_submitted = true;
 
                 $idea->submitted_at = Carbon::now();
                 $idea->title = $request->get('title');
                 $idea->short_description = $request->get('short_description');
-				$idea->description = $request->get('description');
+                $idea->description = $request->get('description');
 
-				$idea->name = $request->get('name');
-				$idea->contact = $request->get('contact');
-				$idea->email = $request->get('email');
+                $idea->name = $request->get('name');
+                $idea->contact = $request->get('contact');
+                $idea->email = $request->get('email');
 
-				$idea->address = $request->get('address');
-				$idea->entrepreneur_id = $request->get('entrepreneur_id');
-				$idea->product_code = $request->get('product_code');
-				$idea->order_id = $request->get('order_id');
+                $idea->address = $request->get('address');
+                $idea->entrepreneur_id = $request->get('entrepreneur_id');
+                $idea->product_code = $request->get('product_code');
+                $idea->order_id = $request->get('order_id');
 
-				$idea->status = $status->id;
+                $idea->status = $status->id;
 
 
                 $idea->save();
@@ -200,7 +202,7 @@ class IdeaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Idea  $idea
+     * @param  \App\Idea $idea
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -246,7 +248,7 @@ class IdeaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @param $idea
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -336,7 +338,7 @@ class IdeaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Idea  $idea
+     * @param  \App\Idea $idea
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception

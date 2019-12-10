@@ -67,38 +67,38 @@
     @if (Route::has('account.login'))
         <div class="top-right links">
             @auth
-                <a href="{{ route('dashboard.index') }}">Home</a>
+            {{-- <a href="{{ route('welcome') }}">Home</a> --}}
             @else
                 <a href="{{ route('account.login') }}">Login</a>
 
                 @if (Route::has('account.register'))
                     <a href="{{ route('account.register') }}">Register</a>
                 @endif
-            @endauth
+                @endauth
         </div>
     @endif
 
     <div class="content content-50-percent">
         <div class="row">
             <div class="col-sm-6">
-				<div id="container "  class="float_left">
-						<a href="{{route('dashboard.idea.create')}}" class="learn-more">
+                <div id="container " class="float_left">
+                    <a href="{{route('dashboard.idea.create')}}" class="learn-more">
 							<span class="circle">
 								<span class="icon arrow"></span>
 							</span>
-							<span class="button-text">Submit Complain.</span>
-						</a>
-				</div>
+                        <span class="button-text">Submit Complain.</span>
+                    </a>
+                </div>
             </div>
             <div class="col-sm-6">
-				<div id="container" class="float_right">
-                <a href="{{route('status_check')}}" class="learn-more">
+                <div id="container" class="float_right">
+                    <a href="{{route('status_check')}}" class="learn-more">
 						<span class="circle">
 						<span class="icon arrow"></span>
 						</span>
-						<span class="button-text">Check Complain Status.</span>
-					</a>
-				</div>
+                        <span class="button-text">Check Complain Status.</span>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -112,19 +112,19 @@
 <script src="{{ mix('/js/app.js') }}"></script>
 
 <script>
-	$.fn.selectpicker.Constructor.BootstrapVersion = 4;
+    $.fn.selectpicker.Constructor.BootstrapVersion = 4;
 </script>
 
 <script>
-	$(function() {
-		$('select').selectpicker({
-			actionsBox: true,
-			liveSearch: true,
-			width: 'auto',
-			selectedTextFormat: 'count > 3',
-			showTick: true,
-		});
-	});
+    $(function () {
+        $('select').selectpicker({
+            actionsBox: true,
+            liveSearch: true,
+            width: 'auto',
+            selectedTextFormat: 'count > 3',
+            showTick: true,
+        });
+    });
 </script>
 
 </body>
