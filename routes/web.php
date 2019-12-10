@@ -23,6 +23,12 @@ Route::get('/', function () {
 	return view('welcome');
 })->name('welcome');
 
+Route::get('/status-check', function () {
+	return view('complain_status');
+})->name('status_check');
+
+Route::post('/status_search', 'ComplainController@search')->name('status_search');
+
 
 
 

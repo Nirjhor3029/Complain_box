@@ -92,7 +92,7 @@
             </div>
             <div class="col-sm-6">
 				<div id="container" class="float_right">
-				<a href="#" class="learn-more">
+                <a href="{{route('status_check')}}" class="learn-more">
 						<span class="circle">
 						<span class="icon arrow"></span>
 						</span>

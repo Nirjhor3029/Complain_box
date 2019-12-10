@@ -24,6 +24,12 @@ class ComplainController extends Controller
 		$this->middleware(['web']);
 	}
 
+	public function search(Request $request){
+
+		
+		return $request;
+
+	}
 
 
 }
