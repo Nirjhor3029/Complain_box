@@ -1,0 +1,3 @@
+my-profile
+my-profile/update
+Terms of Service Agreement

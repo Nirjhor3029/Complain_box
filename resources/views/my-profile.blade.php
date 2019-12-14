@@ -2,7 +2,7 @@
 
 @section('site_title', 'My Profile')
 
-@section('bg_image', 'profile-page')
+@section('bg_image', '')
 
 @section('content')
     <div class="row py-3">

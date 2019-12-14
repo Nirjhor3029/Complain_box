@@ -56,7 +56,7 @@
     </style>
 @endsection
 
-@section('bg_image', 'profile-page')
+@section('bg_image', '')
 
 @section('content')
     <div class="row py-3">

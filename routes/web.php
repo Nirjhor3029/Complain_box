@@ -50,6 +50,8 @@ Route::prefix('secure/dashboard')->name('dashboard.')->group(static function ()
 {
 
 
+
+    // Route::get('/', 'AccountDashboardController@index')->name('index');
     Route::get('/', 'AccountDashboardController@index')->name('index');
     Route::get('/how-it-works', 'AccountDashboardController@howItWorks')->name('how-it-works');
     Route::get('/all-idea', 'AccountDashboardController@allIdeas')->name('all-idea');
@@ -286,9 +288,12 @@ Route::prefix('secure/admin')->name('admin.')->middleware([
     Route::get('/', 'AdminDashboard\AdminDashboardController@adminDashboard')->name('admin-dashboard');
     Route::get('/previousMontIdeas', 'AdminDashboard\AdminDashboardController@previousMontIdeas')->name('admin-previousMontIdeas');
     Route::get('/featuredIdeas', 'AdminDashboard\AdminDashboardController@featuredIdeas')->name('admin-featuredIdeas');
-    Route::get('/allIdeas', 'AdminDashboard\AdminDashboardController@allIdeas')->name('admin-allIdeas');
+    Route::get('/all-complain', 'AdminDashboard\AdminDashboardController@allIdeas')->name('admin-allIdeas');
     Route::post('/make_featured', 'AdminDashboard\AdminDashboardController@makeFeatured')->name('admin-makeFeatured');
     Route::post('/make_non_featured', 'AdminDashboard\AdminDashboardController@makeNonFeatured')->name('admin-makeNonFeatured');
+
+    Route::get('/all-status', 'StatusController@index')->name('admin-allStatus');
+
 });
 
 Route::prefix('terms')->name('terms.')->group(static function ()

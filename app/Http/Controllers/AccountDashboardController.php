@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use DB;
+use Redirect;
 
 class AccountDashboardController extends Controller
 {
@@ -29,6 +30,9 @@ class AccountDashboardController extends Controller
      */
     public function index()
     {
+
+         return Redirect::to('/');
+
         $month = date('m');
 
         /*$data = Idea::orderByDesc('created_at')->whereIsActive(1)->whereIsSubmitted(1)->whereMonth('submitted_at', $month)->get();

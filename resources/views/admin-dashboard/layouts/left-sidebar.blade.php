@@ -35,7 +35,11 @@
             <!-- /.left-side-navbar-li --> --}}
 
             <li class="left-side-navbar-li">
-                <a href="{{ route('admin.admin-allIdeas') }}" @if (request()->is('secure/'))class="active-navbar-item"@endif><img src="{{ asset('img/admin/all-ideas-icon.svg') }}" alt=""> All Complains</a>
+                <a href="{{ route('admin.admin-allIdeas') }}" @if (request()->is('secure/admin/all-complain'))class="active-navbar-item"@endif><img src="{{ asset('img/admin/all-ideas-icon.svg') }}" alt=""> All Complains</a>
+            </li>
+            <!-- /.left-side-navbar-li -->
+            <li class="left-side-navbar-li">
+                <a href="{{ route('admin.admin-allStatus') }}" @if (request()->is('secure/admin/all-status'))class="active-navbar-item"@endif><img src="{{ asset('img/admin/all-ideas-icon.svg') }}" alt="">Complain Status</a>
             </li>
             <!-- /.left-side-navbar-li -->
 
