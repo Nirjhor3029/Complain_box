@@ -3,7 +3,8 @@
 @section('site_title', 'Admin Dashboard')
 
 @section('header_tag')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2/dist/Chart.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2/dist/Chart.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 @endsection
 
 @section('bg_image', 'admin-page')
@@ -11,319 +12,157 @@
 @section('content')
     <div class="row pt-3 pb-3 pl-4 pr-4 admin-dashboard-right-section">
 
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+				<table id="example" class=" stripe hover row-border">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>User Info</th>
+								<th>Complain Title</th>
+								<th>Complain ID</th>
+								<th>Status</th>
+							</tr>
+						</thead>
 
-            <div class="row">
-                <div class="col-12 col-12 col-md-12 col-lg-12">
-                    <div class="card card-shadow p-3">
-                        <h5 class="text-deep-purple mb-0">All Published Idea  &nbsp;&nbsp;&nbsp;<span class="badge badge-purple badge-pill">{{ $all_idea_published}}</span>
-                        </h5>
-                        <hr class="hr">
+						<tbody>
+							<?php $i = 0 ?>
+							@foreach ($publishedIdeas as $item)
+								<tr>
+									<td>{{ $i }}</td>
+									<td>
+										{{ $item->user->first_name }} 	<br>
+										{{ $item->user->email }} 	<br>
+										( {{ ($item->user->email_verified_at == null)? "Not Varified": "Varified" }} )<br>
+										{{ $item->user->cell_number }}<br>
+										{{ $item->user->designation }}<br>
+										<br>
+									</td>
+									<td>
+										{{ $item->title }}
+									</td>
+									<td>
+										{{ $item->complain_id }}
+									</td>
+									<td>
+										@foreach ($statuses as $item)
 
-                        <div class="enable-ideas-scrollable">
-                            <ul class="list-unstyled recent-ideas-module pt-0 pb-1" v-for="(idea, index) in ideas" :key="index">
-								<div class="row">
-										<div class="col-8 col-8 col-md-8 col-lg-8">
-												<li class="media hr pb-0 mb-2 mt-2">
-
-														<div v-if="idea.user.profile_picture == undefined">
-															<a :href="'/secure/dashboard/idea/' + idea.uuid" target="_blank"><img src="/img/profile-picture-placeholder.svg" class="mr-2 rounded-circle" alt="Profile Picture" height="60"></a>
-														</div>
-
-														<div v-else>
-														<a :href="'/secure/dashboard/idea/' + idea.uuid" target="_blank"><img :src="'{{asset('/')}}' + idea.user.profile_picture" class="mr-2 rounded-circle" alt="Profile Picture" height="60"></a>
-														</div>
-
-														<div class="media-body recent-ideas-idea-description">
-															<h5 class="recent-ideas-idea-title" style="color: #FFAD4D;">
-																<a :href="'/secure/dashboard/idea/' + idea.uuid" target="_blank">@{{ idea.title }}<span class="text-muted">|</span> @{{ idea.topic }}</a>
-															</h5>
-
-															<div class="row">
-																<div class="col-12 col-sm-8 col-md-8 col-lg-8">
-																	<p class="mb-1 font-weight-bold recent-ideas-idea-author" style="color: #555555;">@{{ idea.user.first_name }}, @{{ idea.user.designation }}</p>
-																</div>
-																<!-- /.col-12 col-sm-8 col-md-8 col-lg-8 -->
-
-																<div class="col-12 col-sm-4 col-md-4 col-lg-4 text-right">
-																	<span v-if="idea.is_featured == 1"><span class="is-featured"><img src="{{ asset('img/featured.svg') }}" alt=""></span></span>
-																	<small class="recent-ideas-idea-published-time" style="color: #B9B9B9;">@{{ idea.submitted_at | formatDate }}</small>
-																</div>
-																<!-- /.col-12 col-sm-4 col-md-4 col-lg-4 -->
-															</div>
-															<!-- /.row -->
-
-															<p style="color: #414141;">@{{ idea.elevator_pitch | truncate(300, '...') }}</p>
-
-															{{--<div class="text-right"><a href="#" class="view-more-button">View More</a></div>
-															<!-- /.text-right -->--}}
-
-															<div class="row" style="display: flex; font-size: 11px;">
-																<div class="col-6 col-sm-6 col-md-6 col-lg-6">
-																	<div>
-																		<span class="mr-2" style="color: #7B7B7B;">@{{ idea.comments.length }}</span> comments
-																		<img src="{{ asset('img/chat.svg') }}" height="18" alt="" class="ml-2">
-																		<span class="ml-3 mr-2" style="color: #7B7B7B;">@{{idea.likes.length}} likes</span>
-																		{{-- <img @click="like(idea.id)" src="{{ asset('img/like.svg') }}" height="16" alt=""> --}}
-																	</div>
-																</div>
-																<!-- /.col-6 col-sm-6 col-md-6 col-lg-6 -->
-
-																<div class="col-6 col-sm-6 col-md-6 col-lg-6">
-																	<div class="text-right">
-
-
-																		<a :href="'/secure/dashboard/idea/' + idea.uuid" target="_blank" class="view-more-button " style="font-size: 11px;">Full View</a>
-																	</div>
-																	<!-- /.text-right -->
-																</div>
-																<!-- /.col-6 col-sm-6 col-md-6 col-lg-6 -->
-															</div>
-															<!-- /.row -->
-														</div>
-													</li>
-										</div>
-										<!-- /.col-12 col-12 col-md-12 col-lg-12 -->
-
-										<div class="col-4 col-4 col-md-4 col-lg-4 feature_column">
+										@if (1)
 											<div class="row">
-												<div class="col-4 col-4 col-md-4 col-lg-4"></div>
-												<div class="col-8 col-8 col-md-8 col-lg-8" style="display: flex;">
-														<a v-if="idea.is_featured == 0" @click="makeFeatured(idea.id)"   class="view-more-button make_featured_idea_badge" style="font-size: 11px;">Make Fetured</a>
-														<span v-else  @click="makeNonFeatur(idea.id)"  class="featured_idea_badge" style="font-size: 11px;">Fetured</span>
-												</div>
+												<div class="col-sm-10">{{ $item->title }}</div>
+												<div class="col-sm-2 "><a href="#" class="button_status active"></a></div>
 											</div>
-
-										</div>
-										<!-- /.col-12 col-12 col-md-12 col-lg-12 -->
-								</div>
-
-
-                            </ul>
-                        </div>
-                        <!-- /.enable-ideas-scrollable -->
-
-                    </div>
-                    <!-- /.card card-shadow -->
-                </div>
-                <!-- /.col-12 col-12 col-md-12 col-lg-12 -->
-            </div>
-			<!-- /.row -->
-        </div>
-		<!-- /.col-12 col-sm-12 col-md-12 col-lg-12 -->
-	</div>
-	<!-- /.row -->
-
-
-
-
-
-
-
-
-
-
-
-	{{-- <div class="row pt-3 pb-3 pl-4 pr-4 admin-dashboard-right-section">
-
-			<div class="col-12 col-sm-12 col-md-12 col-lg-12">
-
-				<div class="row">
-					<div class="col-12 col-12 col-md-12 col-lg-12">
-						<div class="card card-shadow p-3">
-							<h5 class="text-deep-purple mb-0">{{$idea_name}} &nbsp;&nbsp;&nbsp;<span class="badge badge-purple badge-pill">{{ $ideasCount}}</span>
-							</h5>
-							<hr class="hr">
-
-							<div class="enable-ideas-scrollable">
-								<ul class="list-unstyled recent-ideas-module pt-0 pb-1" v-for="(idea, index) in ideas_published" :key="index">
-									<div class="row">
-											<div class="col-8 col-8 col-md-8 col-lg-8">
-													<li class="media hr pb-0 mb-2 mt-2">
-
-															<div v-if="idea.user.profile_picture == undefined">
-																<a :href="'/secure/dashboard/idea/' + idea.uuid" target="_blank"><img src="/img/profile-picture-placeholder.svg" class="mr-2 rounded-circle" alt="Profile Picture" height="60"></a>
-															</div>
-
-															<div v-else>
-															<a :href="'/secure/dashboard/idea/' + idea.uuid" target="_blank"><img :src="'{{asset('/')}}' + idea.user.profile_picture" class="mr-2 rounded-circle" alt="Profile Picture" height="60"></a>
-															</div>
-
-															<div class="media-body recent-ideas-idea-description">
-																<h5 class="recent-ideas-idea-title" style="color: #FFAD4D;">
-																	<a :href="'/secure/dashboard/idea/' + idea.uuid" target="_blank">@{{ idea.title }}<span class="text-muted">|</span> @{{ idea.topic }}</a>
-																</h5>
-
-																<div class="row">
-																	<div class="col-12 col-sm-8 col-md-8 col-lg-8">
-																		<p class="mb-1 font-weight-bold recent-ideas-idea-author" style="color: #555555;">@{{ idea.user.first_name }}, @{{ idea.user.designation }}</p>
-																	</div>
-																	<!-- /.col-12 col-sm-8 col-md-8 col-lg-8 -->
-
-																	<div class="col-12 col-sm-4 col-md-4 col-lg-4 text-right">
-																		<span v-if="idea.is_featured == 1"><span class="is-featured"><img src="{{ asset('img/featured.svg') }}" alt=""></span></span>
-																		<small class="recent-ideas-idea-published-time" style="color: #B9B9B9;">@{{ idea.submitted_at | formatDate }}</small>
-																	</div>
-																	<!-- /.col-12 col-sm-4 col-md-4 col-lg-4 -->
-																</div>
-																<!-- /.row -->
-
-																<p style="color: #414141;">@{{ idea.elevator_pitch | truncate(300, '...') }}</p>
-
-
-
-																<div class="row" style="display: flex; font-size: 11px;">
-																	<div class="col-6 col-sm-6 col-md-6 col-lg-6">
-																		<div>
-																			<span class="mr-2" style="color: #7B7B7B;">@{{ idea.comments.length }}</span> comments
-																			<img src="{{ asset('img/chat.svg') }}" height="18" alt="" class="ml-2">
-																			<span class="ml-3 mr-2" style="color: #7B7B7B;">@{{idea.likes.length}} likes</span>
-																		</div>
-																	</div>
-																	<!-- /.col-6 col-sm-6 col-md-6 col-lg-6 -->
-
-																	<div class="col-6 col-sm-6 col-md-6 col-lg-6">
-																		<div class="text-right">
-
-
-																			<a :href="'/secure/dashboard/idea/' + idea.uuid" target="_blank" class="view-more-button " style="font-size: 11px;">Full View</a>
-																		</div>
-																		<!-- /.text-right -->
-																	</div>
-																	<!-- /.col-6 col-sm-6 col-md-6 col-lg-6 -->
-																</div>
-																<!-- /.row -->
-															</div>
-														</li>
+										@else
+											<div class="row">
+												<div class="col-sm-10">{{ $item->title }}</div>
+												<div class="col-sm-2"><a href="#" class="button_status"></a></div>
 											</div>
-											<!-- /.col-12 col-12 col-md-12 col-lg-12 -->
+										@endif
 
-											<div class="col-4 col-4 col-md-4 col-lg-4 feature_column">
-												<div class="row">
-													<div class="col-4 col-4 col-md-4 col-lg-4"></div>
-													<div class="col-8 col-8 col-md-8 col-lg-8" style="display: flex;">
-															<a v-if="idea.is_featured == 0" @click="makeFeatured(idea.id)"   class="view-more-button make_featured_idea_badge" style="font-size: 11px;">Make Fetured</a>
-															<span v-else  @click="makeNonFeatur(idea.id)"  class="featured_idea_badge" style="font-size: 11px;">Fetured</span>
-													</div>
-												</div>
+										<hr>
 
-											</div>
-											<!-- /.col-12 col-12 col-md-12 col-lg-12 -->
-									</div>
+										@endforeach
 
+									</td>
+								</tr>
+								<?php $i++;  ?>
+							@endforeach
 
-								</ul>
-							</div>
-							<!-- /.enable-ideas-scrollable -->
+						</tbody>
 
-						</div>
-						<!-- /.card card-shadow -->
-					</div>
-					<!-- /.col-12 col-12 col-md-12 col-lg-12 -->
-				</div>
-				<!-- /.row -->
-			</div>
-			<!-- /.col-12 col-sm-12 col-md-12 col-lg-12 -->
+						<tfoot>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+						</tfoot>
+
+					</table>
 		</div>
-	</div> --}}
+		<!-- /.col-12 col-sm-12 col-md-12 col-lg-12 -->
+    </div>
+    <!-- /.row -->
 
 
-		<!-- /.row -->
+
+
+
+
+
+
+
+
 
 @endsection
 
 @section('customJS')
 
 
-
-
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
     <script>
-			Vue.config.devtools = true;
+		$(document).ready( function () {
 
-			const app = new Vue({
-				el: '#app',
-				data() {
-					return {
-						ideas: [],
-						ideas_published: [],
-					};
-				},
+			$('#example').DataTable({
+				paging: true,
+				// scrollY:100,
+				searching: true,
+				ordering:  true,
+				select: true,
 
-				methods: {
-					getIdea() {
-
-						axios.get('/secure/dashboard/all-ideas-published').then((response) => {
-							this.ideas = response.data.ideas;
-							console.log(response.data);
-						}).catch((err) => {
-							console.log(err.response);
-						});
-						axios.get('/secure/dashboard/all-ideas').then((response) => {
-							this.ideas_published = response.data.ideas;
-							console.log(response.data);
-						}).catch((err) => {
-							console.log(err.response);
-						});
-					},
-					like(ideaId) {
-						axios.post(`/secure/dashboard/submit-like`, {idea_id: ideaId}).then((response) => {
-							this.getIdea();
-
-							console.log(response.data);
-						}).catch((err) => {
-							console.log(err);
-						});
-					},
-					makeFeatured(ideaId) {
-						// alert(ideaId);
-						axios.post(`/secure/admin/make_featured`, {idea_id: ideaId}).then((response) => {
-							this.getIdea();
-
-							console.log(response.data);
-						}).catch((err) => {
-							console.log(err);
-						});
-					},
-					makeNonFeatur(ideaId) {
-						// alert(ideaId);
-						axios.post(`/secure/admin/make_non_featured`, {idea_id: ideaId}).then((response) => {
-							this.getIdea();
-
-							console.log(response.data);
-						}).catch((err) => {
-							console.log(err);
-						});
-					},
-				},
-				created() {
-					this.getIdea();
-
-					Echo.channel('idea').listen('NewComment', (e) => {
-						this.comments.push({
-							comment: e.comment,
-						});
-					});
-				},
 			});
 
-			Vue.filter('formatDate', function(value) {
-				if (value) {
-					return moment(String(value)).fromNow();
-				}
-			});
 
-			const filter = function(text, length, clamp) {
-				clamp = clamp || '...';
-				var node = document.createElement('div');
-				node.innerHTML = text;
-				var content = node.textContent;
-				return content.length > length ? content.slice(0, length) + clamp : content;
-			};
+			// Setup - add a text input to each footer cell
+			$('#example tfoot th').each( function () {
+				var title = $('#example thead th').eq( $(this).index() ).text();
+				$(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+			} );
 
-			Vue.filter('truncate', filter);
+			// DataTable
+			var table = $('#example').DataTable();
 
-			window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor;
+			// Apply the filter
+			table.columns().every( function () {
+				var column = this;
+
+				$( 'input', this.footer() ).on( 'keyup change', function () {
+					column
+						.search( this.value )
+						.draw();
+				} );
+			} );
+
+
+			var table = $('#example').DataTable();
+
+			table.columns( '.select-filter' ).every( function () {
+				var that = this;
+
+				// Create the select list and search operation
+				var select = $('<select />')
+					.appendTo(
+						this.footer()
+					)
+					.on( 'change', function () {
+						that
+							.search( $(this).val() )
+							.draw();
+					} );
+
+				// Get the search data for the first column and add to the select list
+				this
+					.cache( 'search' )
+					.sort()
+					.unique()
+					.each( function ( d ) {
+						select.append( $('<option value="'+d+'">'+d+'</option>') );
+					} );
+			} );
+
+
+
+		} );
     </script>
 @endsection

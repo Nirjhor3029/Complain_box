@@ -2,7 +2,8 @@
 
 @section('site_title', 'All Ideas')
 
-@section('bg_image', 'all-ideas-page')
+{{-- all-ideas-page --}}
+@section('bg_image', '')
 
 @section('content')
 
@@ -81,38 +82,40 @@
         </div>
         <!-- /.col-12 col-sm-12 col-md-12 col-lg-12 -->
 
-        <div class="filter" style="display:none" :style="loading == true ? 'display:none' : 'display:block'">
-            <div class="filter__tabs row">
-                <div id="tab" class="row" style="visibility:visible">
-                    <div>
-                        <input type="text" name="date" id="demo-1" v-model="dateField" @focus="CallDatePicker()" class="form-control custom-form-control filter__date" placeholder="Select Date">
-                    </div>
-                    <div>
-                        <select name="topic" class="custom-form-control filter__select" v-model="topicField" @change="filterAllIdea(dateField)" title="Select Idea Topic">
-                            <option value="Distribution">Distribution</option>
-                            <option value="Consumer Engagement">Consumer Engagement</option>
-                            <option value="B2B">B2B</option>
-                            <option value="Automation">Automation</option>
-                            <option value="Merchandising">Merchandising</option>
-                            <option value="FF">FF</option>
-                            <option value="Research">Research</option>
-                            <option value="Channel Management">Channel Management</option>
-                            <option value="Product">Product</option>
-                            <option value="Pricing and Compliance">Pricing and Compliance</option>
-                            <option value="Sales Management">Sales Management</option>
-                            <option value="Illicit">Illicit</option>
-                            <option value="New Category">New Category</option>
-                            <option value="Alternative Revenue">Alternative Revenue</option>
-                            <option value="Culture and Way of Work">Culture and Way of Work</option>
-                            <option value="Others">Others</option>
-                        </select>
-                    </div>
-                </div>
-                <a class="filter__btn" onclick="toggleClass()" style="font-size: 11px; margin-left: 25px; margin-top: 2px; cursor:pointer">
-				<img src="{{asset('img/filter.png')}}" alt="Logo" height="32">
-                </a>
-            </div>
-        </div>
+        <div class="filter-container" style="display: none">
+				<div class="filter" style="display:none" :style="loading == true ? 'display:none' : 'display:block'">
+						<div class="filter__tabs row">
+							<div id="tab" class="row" style="visibility:visible">
+								<div>
+									<input type="text" name="date" id="demo-1" v-model="dateField" @focus="CallDatePicker()" class="form-control custom-form-control filter__date" placeholder="Select Date">
+								</div>
+								<div>
+									<select name="topic" class="custom-form-control filter__select" v-model="topicField" @change="filterAllIdea(dateField)" title="Select Idea Topic">
+										<option value="Distribution">Distribution</option>
+										<option value="Consumer Engagement">Consumer Engagement</option>
+										<option value="B2B">B2B</option>
+										<option value="Automation">Automation</option>
+										<option value="Merchandising">Merchandising</option>
+										<option value="FF">FF</option>
+										<option value="Research">Research</option>
+										<option value="Channel Management">Channel Management</option>
+										<option value="Product">Product</option>
+										<option value="Pricing and Compliance">Pricing and Compliance</option>
+										<option value="Sales Management">Sales Management</option>
+										<option value="Illicit">Illicit</option>
+										<option value="New Category">New Category</option>
+										<option value="Alternative Revenue">Alternative Revenue</option>
+										<option value="Culture and Way of Work">Culture and Way of Work</option>
+										<option value="Others">Others</option>
+									</select>
+								</div>
+							</div>
+							<a class="filter__btn" onclick="toggleClass()" style="font-size: 11px; margin-left: 25px; margin-top: 2px; cursor:pointer">
+							<img src="{{asset('img/filter.png')}}" alt="Logo" height="32">
+							</a>
+						</div>
+					</div>
+		</div>
 
 
         </div>
@@ -150,7 +153,7 @@
 				},
 				methods: {
 					getIdea() {
-						axios.get('/secure/dashboard/all-ideas-published').then((response) => {
+						axios.get('/secure/dashboard/my-ideas-published').then((response) => {
 							this.ideas = response.data.ideas;
                             this.loading = false;
 

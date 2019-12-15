@@ -40,6 +40,8 @@
 
     <div class="row">
         <div class="col-12 col-sm-10 col-md-9 offset-md-1 col lg-9 offset-lg-1">
+				{!! laraflash()->render() !!}
+
             @include('errors.validation')
 
             {{-- @can('add_idea') --}}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Idea;
 use App\User;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -15,199 +16,201 @@ use Redirect;
 
 class AccountDashboardController extends Controller
 {
-    /**
-     * AccountDashboardController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware(['web', 'auth', 'isActive',]);
-    }
+	/**
+	 * AccountDashboardController constructor.
+	 */
+	public function __construct()
+	{
+		$this->middleware(['web', 'auth', 'isActive',]);
+	}
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
-    {
+	/**
+	 * Show the application dashboard.
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function index()
+	{
 
-         return Redirect::to('/');
+		return Redirect::to('/');
 
-        $month = date('m');
+		$month = date('m');
 
-        /*$data = Idea::orderByDesc('created_at')->whereIsActive(1)->whereIsSubmitted(1)->whereMonth('submitted_at', $month)->get();
+		/*$data = Idea::orderByDesc('created_at')->whereIsActive(1)->whereIsSubmitted(1)->whereMonth('submitted_at', $month)->get();
         return $data;*/
 
-        $totalIdeasCount = Idea::orderByDesc('created_at')->whereIsActive(1)->whereIsSubmitted(1)->count();
-        $recentIdeasCount = Idea::orderByDesc('created_at')->whereIsActive(1)->whereIsSubmitted(1)->whereMonth('submitted_at', $month)->count();
+		$totalIdeasCount = Idea::orderByDesc('created_at')->whereIsActive(1)->whereIsSubmitted(1)->count();
+		$recentIdeasCount = Idea::orderByDesc('created_at')->whereIsActive(1)->whereIsSubmitted(1)->whereMonth('submitted_at', $month)->count();
 
-        $featuredIdeas = Idea::orderByDesc('submitted_at')->whereIsActive(1)->whereIsSubmitted(1)->whereIsFeatured(1)->whereIsApproved(1)->take(3)->get();
+		$featuredIdeas = Idea::orderByDesc('submitted_at')->whereIsActive(1)->whereIsSubmitted(1)->whereIsFeatured(1)->whereIsApproved(1)->take(3)->get();
 
-        $myIdeaDrafted = Idea::whereUserId(auth()->id())->whereIsSubmitted(0)->whereIsActive(0)->orderByDesc('id')->first();
-        $myIdeaSubmitted = Idea::whereUserId(auth()->id())->whereIsSubmitted(1)->whereIsActive(1)->orderByDesc('id')->first();
+		$myIdeaDrafted = Idea::whereUserId(auth()->id())->whereIsSubmitted(0)->whereIsActive(0)->orderByDesc('id')->first();
+		$myIdeaSubmitted = Idea::whereUserId(auth()->id())->whereIsSubmitted(1)->whereIsActive(1)->orderByDesc('id')->first();
 
-        return view('dashboard', compact('recentIdeasCount', 'featuredIdeas', 'myIdeaDrafted', 'myIdeaSubmitted', 'totalIdeasCount'));
-    }
+		return view('dashboard', compact('recentIdeasCount', 'featuredIdeas', 'myIdeaDrafted', 'myIdeaSubmitted', 'totalIdeasCount'));
+	}
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function acceptTermsAndConditions()
-    {
-        if (auth()->check() && auth()->user()->tnc_accepted == true) {
-            return redirect()->route('dashboard.index');
-        }
+	/**
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function acceptTermsAndConditions()
+	{
+		if (auth()->check() && auth()->user()->tnc_accepted == true) {
+			return redirect()->route('dashboard.index');
+		}
 
-        return view('partials.terms-and-conditions');
-    }
+		return view('partials.terms-and-conditions');
+	}
 
-    /**
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function confirmTermsAndConditions(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'accept_the_terms_of_service' => ['required', 'accepted'],
-        ]);
+	/**
+	 * @param  \Illuminate\Http\Request  $request
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function confirmTermsAndConditions(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'accept_the_terms_of_service' => ['required', 'accepted'],
+		]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+		if ($validator->fails()) {
+			return redirect()->back()->withErrors($validator)->withInput();
+		}
 
-        if ($request->has('accept_the_terms_of_service')) {
-            $user = User::find(auth()->id());
-            $user->tnc_accepted = true;
-            $user->tnc_accepted_at = Carbon::now();
-            $user->update();
-        }
+		if ($request->has('accept_the_terms_of_service')) {
+			$user = User::find(auth()->id());
+			$user->tnc_accepted = true;
+			$user->tnc_accepted_at = Carbon::now();
+			$user->update();
+		}
 
-        laraflash()->message('You have agreed to the Terms of Service Agreement on '.Carbon::now()->format('F j, Y, g:i A'))->success();
+		laraflash()->message('You have agreed to the Terms of Service Agreement on ' . Carbon::now()->format('F j, Y, g:i A'))->success();
 
-        return redirect()->route('dashboard.index');
-    }
+		return redirect()->route('dashboard.index');
+	}
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function howItWorks()
-    {
-        return view('how-it-works');
-    }
+	/**
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function howItWorks()
+	{
+		return view('how-it-works');
+	}
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function allIdeas()
-    {
-        return view('all-ideas');
-    }
+	/**
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function allIdeas()
+	{
+		// $user = Auth::user()->id;
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function featuredIdeas()
-    {
-        return view('featured-ideas');
-    }
+		return view('all-ideas');
+	}
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function myProfile()
-    {
-        return view('my-profile');
-    }
+	/**
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function featuredIdeas()
+	{
+		return view('featured-ideas');
+	}
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function updateMyProfile()
-    {
-        $image = DB::table("users")->where(['id' => auth()->id()])->get();
+	/**
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function myProfile()
+	{
+		return view('my-profile');
+	}
 
-        return view('update-my-profile', compact('image'));
-    }
+	/**
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function updateMyProfile()
+	{
+		$image = DB::table("users")->where(['id' => auth()->id()])->get();
 
-    /**
-     * Update My Profile Form (Post Request)
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function updateMyProfileForm(Request $request): \Illuminate\Http\RedirectResponse
-    {
-        // Fetch the authenticated user information
-        $user = User::find(auth()->id());
+		return view('update-my-profile', compact('image'));
+	}
 
-        if ($request->filled('password')) {
-            $validator = Validator::make($request->all(), [
-                'cell_number' => 'present|nullable|max:20',
-                'designation' => 'present|nullable|max:120',
-                'team' => 'present|nullable|max:60',
-                'password' => 'required|confirmed|min:8|max:255',
-            ]);
-        } else {
-            $validator = Validator::make($request->all(), [
-                'cell_number' => 'present|nullable|max:20',
-                'designation' => 'present|nullable|max:120',
-                'team' => 'present|nullable|max:60',
-            ]);
-        }
+	/**
+	 * Update My Profile Form (Post Request)
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function updateMyProfileForm(Request $request): \Illuminate\Http\RedirectResponse
+	{
+		// Fetch the authenticated user information
+		$user = User::find(auth()->id());
 
-        $filters = [
-            'designation' => 'trim|escape|capitalize',
-            'team' => 'trim|escape|capitalize',
-        ];
+		if ($request->filled('password')) {
+			$validator = Validator::make($request->all(), [
+				'cell_number' => 'present|nullable|max:20',
+				'designation' => 'present|nullable|max:120',
+				'team' => 'present|nullable|max:60',
+				'password' => 'required|confirmed|min:8|max:255',
+			]);
+		} else {
+			$validator = Validator::make($request->all(), [
+				'cell_number' => 'present|nullable|max:20',
+				'designation' => 'present|nullable|max:120',
+				'team' => 'present|nullable|max:60',
+			]);
+		}
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+		$filters = [
+			'designation' => 'trim|escape|capitalize',
+			'team' => 'trim|escape|capitalize',
+		];
 
-        // Query form file input
-        $profile_picture = $request->profile_picture;
+		if ($validator->fails()) {
+			return redirect()->back()->withErrors($validator)->withInput();
+		}
 
-        if ($profile_picture != null) {
-            // Generate new image name with proper destination location
-            $imageName = 'uploads/profile-picture/'.Str::random(60).'.jpg';
+		// Query form file input
+		$profile_picture = $request->profile_picture;
 
-            // Convert the Base64 Encoded Image Data With a Cropped Version
-            $resized_image = \Image::make($profile_picture)->resize(300, 300)->stream('jpg', 100);
+		if ($profile_picture != null) {
+			// Generate new image name with proper destination location
+			$imageName = 'uploads/profile-picture/' . Str::random(60) . '.jpg';
 
-            // Store the newly converted image to file storage
-            Storage::disk('public')->put($imageName, $resized_image);
+			// Convert the Base64 Encoded Image Data With a Cropped Version
+			$resized_image = \Image::make($profile_picture)->resize(300, 300)->stream('jpg', 100);
 
-            // Unlink/ Delete Old File Before Storing New One to the Database
-            File::delete($user->profile_picture);
+			// Store the newly converted image to file storage
+			Storage::disk('public')->put($imageName, $resized_image);
 
-            // Store New File Location Information to Database and include to storage directory as prefix
-            $user->profile_picture = 'storage/'.$imageName;
-        }
+			// Unlink/ Delete Old File Before Storing New One to the Database
+			File::delete($user->profile_picture);
 
-        $user->cell_number = $request->cell_number;
-        $user->designation = $request->designation;
-        $user->team = $request->team;
+			// Store New File Location Information to Database and include to storage directory as prefix
+			$user->profile_picture = 'storage/' . $imageName;
+		}
 
-        if ($request->filled('password')) {
-            $user->password = $request->password;
-        }
+		$user->cell_number = $request->cell_number;
+		$user->designation = $request->designation;
+		$user->team = $request->team;
 
-        $user->save();
+		if ($request->filled('password')) {
+			$user->password = $request->password;
+		}
 
-        laraflash()->message('Your profile was updated on '.Carbon::now()->format('F j, Y, g:i A'))->success();
+		$user->save();
 
-        return redirect()->route('dashboard.update-my-profile');
-    }
+		laraflash()->message('Your profile was updated on ' . Carbon::now()->format('F j, Y, g:i A'))->success();
 
-    /**
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return string
-     */
-    public function changeProfileImage(Request $request)
-    {
-        return 'success';
-    }
+		return redirect()->route('dashboard.update-my-profile');
+	}
+
+	/**
+	 * @param  \Illuminate\Http\Request  $request
+	 *
+	 * @return string
+	 */
+	public function changeProfileImage(Request $request)
+	{
+		return 'success';
+	}
 }
