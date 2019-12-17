@@ -63,14 +63,20 @@
                     </li>
                     <!-- /.nav-item --> --}}
 
-					<li class="nav-item">
-						<a href="{{ route('dashboard.all-idea') }}" class="nav-link">
-							<span @if (request()->is('secure/dashboard/My-complains')) class="border-bottom-custom" @endif>
-								My Ideas
-							</span>
-						</a>
-					</li>
-					<!-- /.nav-item -->
+                    
+                       
+                    @auth
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.all-idea') }}" class="nav-link">
+                                <span @if (request()->is('secure/dashboard/My-complains')) class="border-bottom-custom" @endif>
+                                    My Complains
+                                </span>
+                            </a>
+                        </li>
+                        <!-- /.nav-item -->
+                    @endauth
+
+					
 
                     <li class="nav-item">
                         <a href="{{ route('dashboard.idea.create') }}" class="nav-link"><span

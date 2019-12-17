@@ -241,7 +241,7 @@ $(document).on("change","#upload_form", function(event) {
         formData.append('idea_id', $('#idea_id').val());
         formData.append('topic', $('#topic').val());
         formData.append('title', $('#title').val());
-        formData.append('elevator_pitch', $('#elevator_pitch').val());
+        formData.append('short_description', $('#short_description').val());
         formData.append('description', $('#description').val());
         formData.append('size', fileSize);
 
@@ -289,6 +289,7 @@ $(document).on("change","#upload_form", function(event) {
                 mimeType:"multipart/form-data"
                 }).done(function(res){ //
 
+                    console.log('ok');
                     res = JSON.parse(res);
                     upload_id.push(res.id)
                     $("#uploaded_file_id").val(upload_id);

@@ -13,8 +13,9 @@ class UploadController extends Controller
 
     public function storeUpload(Request $request)
     {
+        
         $upload = new Upload();
-
+        
         if ($request->idea_id == '') {
 
             $idea = new Idea();
@@ -24,18 +25,28 @@ class UploadController extends Controller
         } else {
             $idea = Idea::find($request->idea_id);
         }
-
-        $idea->topic = $request->topic ?? '';
+        
+        // $idea->topic = $request->topic ?? '';
         $idea->title = $request->title ?? '';
-        $idea->elevator_pitch = $request->elevator_pitch ?? '';
+        $idea->short_description = $request->short_description ?? '';
         $idea->description = $request->description ?? '';
+        
+
+        $idea->complain_id = uniqid();
         $idea->save();
 
+        //return "ok";
+
+        
+       
         if ($request->has('image') && !empty($idea) && $idea->user_id == auth()->id()) {
+            
             // return $request->idea_id;
             $file = $request->file('image');
             $fileName = $file->getClientOriginalName();
             $extenstion = '.' . $file->getClientOriginalExtension();
+
+            
 
             $newName = str_replace($extenstion, '_' . date('Y-m-d_h-i-s') . $extenstion, $fileName);
             $file->move(public_path('idea/files/'), $newName);
@@ -45,12 +56,13 @@ class UploadController extends Controller
             $upload->title = sr(pathinfo($fileName, PATHINFO_FILENAME)) ?: 'Untitled';
             $upload->file = $newName;
             $upload->size = $request->size;
-
+            
             $upload->save();
         } else {
+           
             $upload['error'] = "Something went wrong!!";
         }
-        // return response(['data' => $upload], 200);
+        //return response(['data' => $upload], 200);
         return  $upload;
     }
 

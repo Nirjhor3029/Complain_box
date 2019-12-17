@@ -13,10 +13,11 @@
     <div class="row pt-3 pb-3 pl-4 pr-4 admin-dashboard-right-section">
 
 		<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+			{!! laraflash()->render() !!}
 				<table id="example" class=" stripe hover row-border">
 						<thead>
 							<tr>
-								<th>#</th>
+								<td>#</td>
 								<th>User Info</th>
 								<th>Complain Title</th>
 								<th>Complain ID</th>
@@ -44,17 +45,17 @@
 										{{ $item->complain_id }}
 									</td>
 									<td>
-										@foreach ($statuses as $item)
+										@foreach ($statuses as $status)
 
-										@if (1)
+										@if ($status->id == $item->status)
 											<div class="row">
-												<div class="col-sm-10">{{ $item->title }}</div>
-												<div class="col-sm-2 "><a href="#" class="button_status active"></a></div>
+												<div class="col-sm-6">{{ $status->title }}</div>
+												<div class="col-sm-6 "><a href="javascript:void(0)" class="button_status active_status"></a></div>
 											</div>
 										@else
 											<div class="row">
-												<div class="col-sm-10">{{ $item->title }}</div>
-												<div class="col-sm-2"><a href="#" class="button_status"></a></div>
+												<div class="col-sm-6">{{ $status->title }}</div>
+											<div class="col-sm-6"><a href="{{ route('admin.status_change', [$item->id,$status->id]) }}" class="button_status"></a></div>
 											</div>
 										@endif
 
@@ -115,9 +116,14 @@
 
 
 			// Setup - add a text input to each footer cell
+			var i = 0;
 			$('#example tfoot th').each( function () {
-				var title = $('#example thead th').eq( $(this).index() ).text();
-				$(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+				if(i>0){
+					var title = $('#example thead th').eq( $(this).index() ).text();
+					$(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+				}
+				i++;
+				
 			} );
 
 			// DataTable

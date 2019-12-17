@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Idea;
 use App\Role;
 use App\Status;
 use Carbon\Carbon;
@@ -64,5 +65,15 @@ class StatusController extends Controller
 
 
 		return redirect()->route('admin.admin-allStatus');
+	}
+
+	public function status_change($complain_id,$status_id)
+	{
+
+		$complain = Idea::find($complain_id);
+		$complain->status = $status_id;
+		$complain->save();
+		laraflash()->message($complain->title . ' : Status Changed !!' . Carbon::now()->format('F j, Y, g:i A'))->success();
+		return redirect()->back();
 	}
 }

@@ -294,6 +294,7 @@ Route::prefix('secure/admin')->name('admin.')->middleware([
 	Route::get('/all-status/edit/{status_id}', 'StatusController@edit')->name('dashboard.status.edit');
 	Route::post('/all-status/edit/{status_id}', 'StatusController@edit_submit')->name('dashboard.status.edit.submit');
 	Route::get('/all-status/delete/{status_id}', 'StatusController@delete')->name('dashboard.status.delete');
+	Route::get('/status_change/{complain_id}/{status_id}', 'StatusController@status_change')->name('status_change');
 	// Complain Box
 
 

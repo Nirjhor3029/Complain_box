@@ -81,8 +81,8 @@
     <div class="content content-50-percent">
         <div class="row">
             <div class="col-sm-6">
-                <div id="container " class="float_left">
-                    <a href="{{route('dashboard.idea.create')}}" class="learn-more">
+                <div id="container " class="float_left width-100">
+                    <a href="{{route('dashboard.idea.create')}}" class="learn-more width-100">
 							<span class="circle">
 								<span class="icon arrow"></span>
 							</span>
@@ -91,8 +91,8 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div id="container" class="float_right">
-                    <a href="{{route('status_check')}}" class="learn-more">
+                <div id="container" class="float_right width-100">
+                    <a href="{{route('status_check')}}" class="learn-more width-100">
 						<span class="circle">
 						<span class="icon arrow"></span>
 						</span>
@@ -105,7 +105,7 @@
         {{-- <div class="mb-4 text-center">
             <a href="{{ route('dashboard.index') }}"><img src="{{ asset('img/home_logo.png') }}" alt="" width="150"></a>
         </div> --}}
-        <h4 class="moment-datetime"></h4><br>
+        {{-- <h4 class="moment-datetime"></h4><br> --}}
     </div>
 </div>
 
