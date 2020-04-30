@@ -34,7 +34,7 @@
         "eslint-config-problems": "^3.0.1",
         "eslint-plugin-prettier": "^3.1.1",
         "eslint-plugin-vue": "^6.0.1",
-        "jquery": "^3.4.1",
+        "jquery": "^3.5.0",
         "laravel-echo": "^1.6.1",
         "laravel-mix": "^5.0.0",
         "laravel-mix-postcss-config": "^1.0.2",
