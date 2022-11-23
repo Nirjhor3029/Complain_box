@@ -23,7 +23,7 @@
         "axios": "^0.19.0",
         "bootstrap": "^4.4.1",
         "bootstrap-select": "^1.13.12",
-        "browser-sync": "^2.26.7",
+        "browser-sync": "^2.27.10",
         "browser-sync-webpack-plugin": "^2.2.2",
         "cleave.js": "^1.5.3",
         "cross-env": "^6.0.3",
